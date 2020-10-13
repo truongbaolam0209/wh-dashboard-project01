@@ -3,8 +3,8 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { colorScheme } from '../assets/constant';
-import ButtonCapsule from './ui/ButtonCapsule';
-import CardPanel from './ui/CardPanel';
+import ButtonCapsule from './RENAMEui/ButtonCapsule';
+import CardPanel from './RENAMEui/CardPanel';
 
 const ChartBarProject = props => {
 

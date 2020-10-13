@@ -5,9 +5,9 @@ import ChartBarProject from '../components/ChartBarProject';
 import ChartPieDrawing from '../components/ChartPieDrawing';
 import ChartProgress from '../components/ChartProgress';
 import NavBar from '../components/NavBar';
+import CardPanel from '../components/RENAMEui/CardPanel';
+import Container from '../components/RENAMEui/Container';
 import TableDrawing from '../components/TableDrawing';
-import CardPanel from '../components/ui/CardPanel';
-import Container from '../components/ui/Container';
 
 
 
