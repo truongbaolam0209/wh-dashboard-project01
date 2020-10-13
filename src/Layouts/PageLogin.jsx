@@ -5,10 +5,9 @@ import React from 'react';
 
 
 
-const PageSignIn = () => {
+const PageLogin = () => {
 
    const onHandleSubmit = data => {
-      console.log('ahihi');
       // setLoading(true);
       // axios.post(`http://localhost:5000/users`, data)
       //    .then(res => {
@@ -78,4 +77,4 @@ const PageSignIn = () => {
    );
 };
 
-export default PageSignIn;
+export default PageLogin;

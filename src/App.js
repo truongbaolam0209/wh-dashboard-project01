@@ -2,8 +2,8 @@ import 'antd/dist/antd.css';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
-import PageDashboard from './Layouts/PageDashboard';
-import PageSignIn from './Layouts/PageSignIn';
+import PageDashboard from './layouts/PageDashboard';
+import PageLogin from './layouts/PageLogin';
 
 
 const App = () => {
@@ -12,8 +12,7 @@ const App = () => {
       <BrowserRouter>
          <Switch>
             <Route path='/' component={PageDashboard} />
-            <Route path='/signin' component={PageSignIn} />
-            {/* <Route component={PageNotFound} /> */}
+            <Route path='/login' component={PageLogin} />
          </Switch>
       </BrowserRouter>
    );
