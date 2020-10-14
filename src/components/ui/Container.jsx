@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import React from 'react';
-import { sizeScheme } from '../../assets/constant';
+// import { sizeScheme } from '../../assets/constant';
 
 const Container = props => {
 
@@ -8,10 +8,11 @@ const Container = props => {
 
     return (
         <div style={style}>
-            {deviceWidth && deviceWidth < sizeScheme.lg
+            <Row justify='space-around'>{children}</Row>
+            {/* {deviceWidth && deviceWidth < sizeScheme.lg
                 ? <>{children}</>
                 : <Row justify='space-around'>{children}</Row>
-            }
+            } */}
         </div>
     );
 };

@@ -36,7 +36,6 @@ const PageDashboard = () => {
     const [loading, setLoading] = useState(true);
 
 
-    console.log(data);
 
     return (
         <NavBar>
@@ -53,7 +52,7 @@ const PageDashboard = () => {
                     ? <SkeletonCard />
                     : (
                         <div style={{ padding: '0 12px' }}>
-                            {data && data.map(project => {
+                            {data && data.reverse().map(project => {
 
                                 return (
                                     <CardPanel
@@ -65,7 +64,7 @@ const PageDashboard = () => {
                                         <Container style={{ margin: '20px' }}>
                                             <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
                                                 <TitleInfo titleInfo='Overdue submissions' />
-                                                <ChartProgress />
+                                                <ChartProgress project={project} />
                                             </Col>
                                             {deviceWidth && deviceWidth <= sizeScheme.lg && <Divider type='horizontal' style={{ padding: '3px 0' }} />}
                                             <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
@@ -77,7 +76,7 @@ const PageDashboard = () => {
 
                                             <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
                                                 <TitleInfo titleInfo='Drawing counts by revision' />
-                                                <ChartBarDrawing />
+                                                <ChartBarDrawing project={project} />
                                             </Col>
                                             {deviceWidth && deviceWidth <= sizeScheme.lg && <Divider type='horizontal' style={{ padding: '3px 0' }} />}
                                             <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>

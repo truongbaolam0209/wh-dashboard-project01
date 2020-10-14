@@ -1,37 +1,19 @@
 import { Badge, Modal, Tooltip } from 'antd';
-import _ from 'lodash';
 import React, { useState } from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
 import styled from 'styled-components';
-import { colorScheme } from '../assets/constant';
-import { getCategoryIndex } from '../utils/function';
+import { pieChartColors } from '../assets/constant';
+import { countAllSameData, getColumnsIndexAndDrawings } from '../utils/function';
+
 
 
 const ChartPieDrawing = props => {
 
     const { project } = props;
-    const COLORS = [colorScheme.yellow, colorScheme.green, colorScheme.red, colorScheme.blue, 'black'];
 
-    let categoryIndex = getCategoryIndex([
-        'Status',
-        'Drawing Number',
-        'Drawing Name',
-        'Rev',
-        'get Approval (A)'
-    ], project);
+    let { columnsIndexArray, allDrawings } = getColumnsIndexAndDrawings(project);
 
-    let AllDrawings = [];
-    project.rows.forEach(drawing => {
-        if (drawing.cells[categoryIndex['Status']].value !== undefined) {
-            AllDrawings = [...AllDrawings, drawing];
-        };
-    });
-
-    let statusCount = {};
-    AllDrawings.forEach(dwg => {
-        statusCount[dwg.cells[categoryIndex['Status']].value] = (statusCount[dwg.cells[categoryIndex['Status']].value] || 0) + 1;
-    });
-    const dataStatusCount = _.map(statusCount, (value, name) => ({ name, value }));
+    const countAllStatus = countAllSameData(project, 'Status');
 
 
 
@@ -50,15 +32,9 @@ const ChartPieDrawing = props => {
         setPortionClick(portion);
 
         let dwgs = [];
-        AllDrawings.forEach(dwg => {
-            if (dwg.cells[categoryIndex['Status']].value === portion.name) {
-                dwgs = [...dwgs, {
-                    'key': dwgs.length,
-                    'Drawing Number': dwg.cells[categoryIndex['Drawing Number']].value ? dwg.cells[categoryIndex['Drawing Number']].value : 'No data',
-                    'Drawing Name': dwg.cells[categoryIndex['Drawing Name']].value ? dwg.cells[categoryIndex['Drawing Name']].value : 'No data',
-                    'Rev': dwg.cells[categoryIndex['Rev']].value ? dwg.cells[categoryIndex['Rev']].value : 'No data',
-                    'get Approval (A)': dwg.cells[categoryIndex['get Approval (A)']].value ? dwg.cells[categoryIndex['get Approval (A)']].value : 'No data'
-                }];
+        allDrawings.forEach(dwg => {
+            if (dwg.cells[columnsIndexArray['Status']].value === portion.name) {
+                dwgs.push(dwg);
             };
         });
         setDrawingByPortions(dwgs);
@@ -72,7 +48,7 @@ const ChartPieDrawing = props => {
         <div>
             <PieChart width={300} height={300} style={{ margin: '0 auto' }}>
                 <Pie
-                    data={dataStatusCount}
+                    data={countAllStatus}
                     cx={150}
                     cy={150}
                     labelLine={false}
@@ -82,10 +58,10 @@ const ChartPieDrawing = props => {
                     onClick={drawingStatusTableOnOpen}
                     cursor='pointer'
                 >
-                    {dataStatusCount.map((entry, index) => (
+                    {countAllStatus.map((entry, index) => (
                         <Cell
                             key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
+                            fill={pieChartColors[index % pieChartColors.length]}
                         />
                     ))}
                 </Pie>
@@ -93,9 +69,9 @@ const ChartPieDrawing = props => {
             </PieChart>
 
             <div style={{ margin: '0 auto', display: 'table' }}>
-                {dataStatusCount.map(item => (
-                    <div key={item.value}>
-                        <StyledBadge size='small' color={COLORS[dataStatusCount.indexOf(item)]} text={item.name} />
+                {countAllStatus.map(item => (
+                    <div key={item.name}>
+                        <StyledBadge size='small' color={pieChartColors[countAllStatus.indexOf(item)]} text={item.name} />
                     </div>
                 ))}
             </div>

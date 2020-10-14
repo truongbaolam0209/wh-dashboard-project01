@@ -15,7 +15,7 @@ const ChartBarProject = props => {
         const timer = setTimeout(() => {
             setData(_.sortBy(dataScheme.projectsDummy, e => e.year));
             setLoading(false);
-        }, 1500);
+        }, 600);
         return () => clearTimeout(timer);
     }, []);
 
@@ -103,7 +103,7 @@ const ChartBarProject = props => {
                                     fill={chartScheme.chartColor}
                                     background={{ fill: '#eee' }}
                                 >
-                                    <LabelList dataKey={labelListType} position='insideTop' />
+                                    <LabelList dataKey={labelListType} position='top' />
                                 </Bar>
                             </BarChart>
 

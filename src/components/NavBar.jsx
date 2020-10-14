@@ -1,10 +1,8 @@
 import { DownCircleOutlined, MessageOutlined } from '@ant-design/icons';
-import { Avatar, BackTop, Divider, Layout, Row } from 'antd';
+import { Avatar, BackTop, Divider, Icon, Layout, Row } from 'antd';
 import React from 'react';
-import { sizeScheme } from '../assets/constant';
+import { colorScheme, sizeScheme } from '../assets/constant';
 
-
-// https://medium.com/zestgeek/ant-design-navbar-with-responsive-drawer-a8d718e471e0
 
 const NavBar = props => {
 
@@ -17,8 +15,8 @@ const NavBar = props => {
                 <div style={{ paddingTop: 5 }}>
 
 
-                    <Row style={{ float: 'left' }}>
-                        <img width={150} src='./img/logo.png' />
+                    <Row style={{ float: 'left', }}>
+                        <img style={{ transform: 'translateY(-10px) translateX(-5px)' }} width={150} src='./img/logo3.png' />
                     </Row>
 
 
@@ -54,11 +52,11 @@ const NavBar = props => {
                     width: 40,
                     lineHeight: '40px',
                     borderRadius: 4,
-                    backgroundColor: '#1088e9',
-                    color: '#fff',
+                    backgroundColor: colorScheme.yellow,
+                    color: 'white',
                     textAlign: 'center',
-                    fontSize: 14,
-                }}>UP</div>
+                    fontSize: 20,
+                }}><Icon style={{ fontSize: '30px' }} type='arrow-up' /></div>
             </BackTop>
 
             {children}

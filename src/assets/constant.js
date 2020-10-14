@@ -12,6 +12,14 @@ export const colorScheme = {
     blue: '#0984e3'
 };
 
+export const pieChartColors = [
+    '#f9ca24',
+    '#05c46b',
+    '#ff3f34',
+    '#0984e3',
+    '#636e72'
+];
+
 export const sizeScheme = {
     xs: 576,
     lg: 992,
