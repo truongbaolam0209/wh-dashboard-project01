@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/wh-dashboard-project01/static/css/main.ff914c26.chunk.css",
+    "main.js": "/wh-dashboard-project01/static/js/main.d409a936.chunk.js",
+    "main.js.map": "/wh-dashboard-project01/static/js/main.d409a936.chunk.js.map",
+    "runtime-main.js": "/wh-dashboard-project01/static/js/runtime-main.4f367d42.js",
+    "runtime-main.js.map": "/wh-dashboard-project01/static/js/runtime-main.4f367d42.js.map",
+    "static/css/2.df04db45.chunk.css": "/wh-dashboard-project01/static/css/2.df04db45.chunk.css",
+    "static/js/2.d64a5929.chunk.js": "/wh-dashboard-project01/static/js/2.d64a5929.chunk.js",
+    "static/js/2.d64a5929.chunk.js.map": "/wh-dashboard-project01/static/js/2.d64a5929.chunk.js.map",
+    "index.html": "/wh-dashboard-project01/index.html",
+    "precache-manifest.02699514bee2a59c3db51528c95d3fe6.js": "/wh-dashboard-project01/precache-manifest.02699514bee2a59c3db51528c95d3fe6.js",
+    "service-worker.js": "/wh-dashboard-project01/service-worker.js",
+    "static/css/2.df04db45.chunk.css.map": "/wh-dashboard-project01/static/css/2.df04db45.chunk.css.map",
+    "static/css/main.ff914c26.chunk.css.map": "/wh-dashboard-project01/static/css/main.ff914c26.chunk.css.map",
+    "static/js/2.d64a5929.chunk.js.LICENSE.txt": "/wh-dashboard-project01/static/js/2.d64a5929.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4f367d42.js",
+    "static/css/2.df04db45.chunk.css",
+    "static/js/2.d64a5929.chunk.js",
+    "static/css/main.ff914c26.chunk.css",
+    "static/js/main.d409a936.chunk.js"
+  ]
+}
