@@ -56,27 +56,6 @@ const TableDrawing = () => {
             noOfDrawing: 80,
             duration: '13 weeks',
             productivity: '60%',
-        },
-        {
-            key: '4',
-            name: 'Jim Red',
-            noOfDrawing: 65,
-            duration: '17 weeks',
-            productivity: '78%',
-        },
-        {
-            key: '5',
-            name: 'Jonas Lim',
-            noOfDrawing: 65,
-            duration: '12 weeks',
-            productivity: '44%',
-        },
-        {
-            key: '6',
-            name: 'Monas Lim',
-            noOfDrawing: 65,
-            duration: '12 weeks',
-            productivity: '44%',
         }
     ];
 

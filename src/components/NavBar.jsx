@@ -1,5 +1,5 @@
-import { DownCircleOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, BackTop, Divider, Image, Layout, Row } from 'antd';
+import { DownCircleOutlined, MessageOutlined } from '@ant-design/icons';
+import { Avatar, BackTop, Divider, Layout, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 
@@ -23,19 +23,21 @@ const NavBar = props => {
 
 
                     <Row style={{ float: 'left' }}>
-                        <Image width={150} src='./img/logo.png' />
+                        <img width={150} src='./img/logo.png' />
                     </Row>
 
 
                     <Row style={{ float: 'right' }}>
-                        <div style={{ color: 'white', paddingRight: 15 }}>
-                            <div style={{ lineHeight: '22px', fontSize: 17, textAlign: 'right' }}>Jonas Shelomoh</div>
-                            <div style={{ lineHeight: '20px', fontSize: 13, textAlign: 'right' }}>Project Director</div>
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ color: 'white', paddingRight: 15 }}>
+                                <div style={{ lineHeight: '22px', fontSize: 17, textAlign: 'right' }}>Jonas Shelomoh</div>
+                                <div style={{ lineHeight: '20px', fontSize: 13, textAlign: 'right' }}>Project Director</div>
+                            </div>
+                            <Avatar size={40} icon='user' />
+                            <Divider type='vertical' style={{ backgroundColor: '#f9ca24', height: 40, width: 1, margin: '0 15px' }} />
+                            <MessageOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
+                            <DownCircleOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
                         </div>
-                        <Avatar size={40} icon={<UserOutlined />} />
-                        <Divider type='vertical' style={{ backgroundColor: '#f9ca24', height: 40, width: 1, margin: '0 15px' }} />
-                        <MessageOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
-                        <DownCircleOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
                     </Row>
 
                 </div>

@@ -1,14 +1,14 @@
 import { Row } from 'antd';
 import React from 'react';
-
+import { sizeScheme } from '../../assets/constant';
 
 const Container = props => {
 
-    const { deviceWidth, children } = props;
+    const { deviceWidth, children, style } = props;
 
     return (
-        <div style={{ margin: '20px 0'}}>
-            {deviceWidth < 1000
+        <div style={style}>
+            {deviceWidth && deviceWidth < sizeScheme.lg
                 ? <>{children}</>
                 : <Row justify='space-around'>{children}</Row>
             }

@@ -3,11 +3,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ButtonCapsule = props => {
-    const { btnname } = props;
+    const { btnname, background } = props;
+
     return (
-        <Container {...props}>
+        <Container {...props} background={background} >
             {btnname}
-        </Container>
+        </Container >
     );
 };
 
@@ -15,8 +16,11 @@ export default ButtonCapsule;
 
 const Container = styled(Button)`
     &:hover {
-        /* background: yellow */
+        outline: none;
     }
+    /* &:focus {
+        outline: none;
+    } */
     
     span {
         font-size: 12px
@@ -28,6 +32,6 @@ const Container = styled(Button)`
     padding: 5px;
     
     border-radius: 500px;
-    font-size: 11px;
-    background: '#bdc3c7'
+    background: ${props => props.background};
+    
 `;

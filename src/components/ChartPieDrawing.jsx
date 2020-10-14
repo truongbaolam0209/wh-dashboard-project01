@@ -1,15 +1,16 @@
-import { Badge, Modal, Table } from 'antd';
+import { Badge, Modal, Table, Tooltip } from 'antd';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
 import styled from 'styled-components';
+import { colorScheme } from '../assets/constant';
 import { getCategoryIndex } from '../utils/function';
 
 
 const ChartPieDrawing = props => {
 
     const { project } = props;
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'black'];
+    const COLORS = [colorScheme.yellow, colorScheme.green, colorScheme.red, colorScheme.blue, 'black'];
 
     let categoryIndex = getCategoryIndex([
         'Status',
@@ -37,6 +38,7 @@ const ChartPieDrawing = props => {
     const [modalShown, setModalShown] = useState(false);
     const [portionClick, setPortionClick] = useState(false);
     const [drawingByPortions, setDrawingByPortions] = useState([]);
+    // const [activeIndex, setActiveIndex] = useState(-1);
 
     const drawingStatusTableOnClose = () => {
         setModalShown(false);
@@ -117,28 +119,32 @@ const ChartPieDrawing = props => {
 
     return (
         <div>
-            <PieChart width={300} height={300}>
+            <PieChart width={300} height={300} style={{ margin: '0 auto' }}>
                 <Pie
                     data={dataStatusCount}
                     cx={150}
                     cy={150}
                     labelLine={false}
                     label={renderCustomizedLabel}
-                    fill='#8884d8'
                     dataKey='value'
                     outerRadius={100}
                     onClick={drawingStatusTableOnOpen}
-                    onMouseEnter={(barPayload, index) => {
-
-                    }}
+                    // onMouseEnter={(e, activeIndex) => console.log(e)}
+                    // onMouseLeave={() => setActiveIndex(-1)}
+                    cursor='pointer'
                 >
                     {dataStatusCount.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                            // fillOpacity={activeIndex === index ? 0.75 : 1}
+                        />
                     ))}
                 </Pie>
+                <Tooltip />
             </PieChart>
 
-            <div>
+            <div style={{ margin: '0 auto', display: 'table' }}>
                 {dataStatusCount.map(item => (
                     <div key={item.value}>
                         <StyledBadge size='small' color={COLORS[dataStatusCount.indexOf(item)]} text={item.name} />
