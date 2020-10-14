@@ -49,9 +49,13 @@ const FormPivot = props => {
 
 
     const selectFormat = (e) => {
-        const formatType = e.target.attributes.getNamedItem('btnname').nodeValue;
+        const formatType = e.target.textContent;
         setTitleLeft(titleLeft.filter(title => title !== selected));
         setPivotArray([...pivotArray, selected + ' - ' + formatType]);
+        setModalFormatVisible(false);
+    };
+
+    const onCloseModalType = () => {
         setModalFormatVisible(false);
     };
 
@@ -59,6 +63,11 @@ const FormPivot = props => {
     const onResetHandle = () => {
         setPivotArray([]);
         setTitleLeft(_.map(project.columns, 'title'));
+    };
+
+    const onCloseModalDetail = () => {
+        onResetHandle();
+        setModalDetailTableVisible(false);
     };
 
 
@@ -85,13 +94,13 @@ const FormPivot = props => {
             </Select>
             <div style={{ display: 'flex' }}>
                 <Button
-                    style={{ background: colorScheme.grey2, width: '90%', margin: '10px auto' }}
+                    style={{ background: colorScheme.grey0, width: '90%', margin: '10px auto' }}
                     onClick={() => setModalDetailTableVisible(true)}
                 >
                     Go to sorted table
                 </Button>
                 <Button
-                    style={{ background: colorScheme.grey, width: '90%', margin: '10px auto' }}
+                    style={{ background: colorScheme.grey2, width: '90%', margin: '10px auto' }}
                     onClick={onResetHandle}
                 >
                     Reset
@@ -103,6 +112,7 @@ const FormPivot = props => {
             <Modal
                 title='Select the format'
                 visible={modalFormatVisible}
+                onCancel={onCloseModalType}
                 footer={null}
             >
                 <ButtonCapsule btnname='Week' onClick={selectFormat} />
@@ -111,7 +121,15 @@ const FormPivot = props => {
             </Modal>
 
 
-            {/* Modal for detail table & bar chart */}
+            <Modal
+                title='Sorted table'
+                centered
+                visible={modalDetailTableVisible}
+                onOk={onCloseModalDetail}
+                onCancel={onCloseModalDetail}
+            >
+                {/* SORTED TABLE SHOWN HERE */}
+            </Modal>
 
         </div>
     );

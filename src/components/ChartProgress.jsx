@@ -1,19 +1,13 @@
 import { Progress } from 'antd';
 import React, { Fragment } from 'react';
-import { colorScheme } from '../assets/constant';
+import { colorScheme, dataScheme } from '../assets/constant';
 
 
 const ChartProgress = () => {
 
-    const data = [
-        { name: 'Late for construction 1/51', value: 5 },
-        { name: 'Overdue date of submissions 49/51', value: 90 },
-        { name: 'Overdue date of approval 35/51', value: 76 }
-    ];
-
     return (
         <div style={{ width: '80%', margin: '25px auto' }}>
-            {data.map(item => (
+            {dataScheme.overdueDummy.map(item => (
                 <Fragment key={item.name}>
                     <div>{item.name}</div>
                     <Progress

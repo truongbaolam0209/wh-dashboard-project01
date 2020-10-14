@@ -35,6 +35,9 @@ const PageDashboard = () => {
 
     const [loading, setLoading] = useState(true);
 
+
+    console.log(data);
+
     return (
         <NavBar>
             <div style={{ marginTop: '60px' }}>
@@ -60,22 +63,24 @@ const PageDashboard = () => {
                                         headTitleColor={'white'}
                                     >
                                         <Container style={{ margin: '20px' }}>
-                                            <Col style={{ marginBottom: 20 }} xs={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                            <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
                                                 <TitleInfo titleInfo='Overdue submissions' />
                                                 <ChartProgress />
                                             </Col>
-                                            <Col style={{ marginBottom: 20 }} xs={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                            {deviceWidth && deviceWidth <= sizeScheme.lg && <Divider type='horizontal' style={{ padding: '3px 0' }} />}
+                                            <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
                                                 <TitleInfo titleInfo='Approved drawings' />
                                                 <ChartPieDrawing project={project} />
                                             </Col>
 
                                             {deviceWidth && deviceWidth <= sizeScheme.xl && <Divider type='horizontal' style={{ padding: '3px 0' }} />}
 
-                                            <Col style={{ marginBottom: 20 }} xs={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                            <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
                                                 <TitleInfo titleInfo='Drawing counts by revision' />
                                                 <ChartBarDrawing />
                                             </Col>
-                                            <Col style={{ marginBottom: 20 }} xs={{ span: 24 }} lg={{ span: 12 }} xl={{ span: 6 }}>
+                                            {deviceWidth && deviceWidth <= sizeScheme.lg && <Divider type='horizontal' style={{ padding: '3px 0' }} />}
+                                            <Col style={{ marginBottom: 10 }} xs={24} lg={12} xl={6}>
                                                 <TitleInfo titleInfo='Sorted table by category' />
                                                 <FormPivot project={project} />
                                             </Col>

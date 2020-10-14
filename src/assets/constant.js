@@ -4,6 +4,7 @@
 export const colorScheme = {
     yellow: '#f9ca24',
     dark: '#1e272e',
+    grey0: '#ecf0f1',
     grey: '#bdc3c7',
     grey2: '#636e72',
     red: '#ff3f34',
@@ -12,6 +13,7 @@ export const colorScheme = {
 };
 
 export const sizeScheme = {
+    xs: 576,
     lg: 992,
     xl: 1200
 };
@@ -29,5 +31,17 @@ export const dataScheme = {
         { name: 'Gul Circle', year: 2019, delayConstruction: 400, delayApproval: 415, productivity: 0.1 },
         { name: 'Changi T5', year: 2020, delayConstruction: 680, delayApproval: 435, productivity: 0.4 },
         { name: 'Dleedon', year: 2021, delayConstruction: 800, delayApproval: 395, productivity: 0.75 },
+    ],
+    overdueDummy: [
+        { name: 'Late for construction 1/51', value: 5 },
+        { name: 'Overdue date of submissions 49/51', value: 90 },
+        { name: 'Overdue date of approval 35/51', value: 76 }
+    ],
+    revisionCounts: [
+        { name: 'Rev 0', nos: 350 },
+        { name: 'Rev A', nos: 211 },
+        { name: 'Rev B', nos: 256 },
+        { name: 'Rev C', nos: 58 },
+        { name: 'Rev D', nos: 42 }
     ]
 };

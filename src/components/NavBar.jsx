@@ -1,6 +1,7 @@
 import { DownCircleOutlined, MessageOutlined } from '@ant-design/icons';
 import { Avatar, BackTop, Divider, Layout, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { sizeScheme } from '../assets/constant';
 
 
 // https://medium.com/zestgeek/ant-design-navbar-with-responsive-drawer-a8d718e471e0
@@ -8,12 +9,6 @@ import React, { useEffect, useState } from 'react';
 const NavBar = props => {
 
     const { children } = props;
-
-    const [deviceWidth, setDeviceWidth] = useState(window.innerWidth);
-    useEffect(() => {
-        window.addEventListener('resize', () => setDeviceWidth(window.innerWidth));
-        return () => window.removeEventListener('resize', () => setDeviceWidth(window.innerWidth));
-    }, []);
 
 
     return (
@@ -34,9 +29,14 @@ const NavBar = props => {
                                 <div style={{ lineHeight: '20px', fontSize: 13, textAlign: 'right' }}>Project Director</div>
                             </div>
                             <Avatar size={40} icon='user' />
-                            <Divider type='vertical' style={{ backgroundColor: '#f9ca24', height: 40, width: 1, margin: '0 15px' }} />
-                            <MessageOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
-                            <DownCircleOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
+                            {window.innerWidth <= sizeScheme.xs ? '' : (
+                                <>
+                                    <Divider type='vertical' style={{ backgroundColor: '#f9ca24', height: 40, width: 1, margin: '0 15px' }} />
+                                    <MessageOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
+                                    <DownCircleOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
+                                </>
+                            )}
+
                         </div>
                     </Row>
 

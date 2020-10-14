@@ -1,4 +1,4 @@
-import { Badge, Modal, Table, Tooltip } from 'antd';
+import { Badge, Modal, Tooltip } from 'antd';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
@@ -38,7 +38,7 @@ const ChartPieDrawing = props => {
     const [modalShown, setModalShown] = useState(false);
     const [portionClick, setPortionClick] = useState(false);
     const [drawingByPortions, setDrawingByPortions] = useState([]);
-    // const [activeIndex, setActiveIndex] = useState(-1);
+
 
     const drawingStatusTableOnClose = () => {
         setModalShown(false);
@@ -65,57 +65,8 @@ const ChartPieDrawing = props => {
     };
 
 
-    const noDataTableCellFormat = (text) => {
-        return {
-            props: {
-                style: { background: text === 'No data' && '#f9ca24' }
-            },
-            children: <div>{text}</div>
-        };
-    };
-
-    const columns = [
-        {
-            title: 'Drawing Number',
-            dataIndex: 'Drawing Number',
-            render(text, record) {
-                return noDataTableCellFormat(text);
-            }
-        },
-        {
-            title: 'Drawing Name',
-            dataIndex: 'Drawing Name',
-            sorter: {
-                compare: (a, b) => a.drawingName - b.drawingName,
-                multiple: 3,
-            },
-            render(text, record) {
-                return noDataTableCellFormat(text);
-            }
-        },
-        {
-            title: 'Rev',
-            dataIndex: 'Rev',
-            sorter: {
-                compare: (a, b) => a.rev - b.rev,
-                multiple: 2,
-            },
-            render(text, record) {
-                return noDataTableCellFormat(text);
-            }
-        },
-        {
-            title: 'get Approval (A)',
-            dataIndex: 'get Approval (A)',
-            sorter: {
-                compare: (a, b) => a.getApprovalA - b.getApprovalA,
-                multiple: 1,
-            },
-            render(text, record) {
-                return noDataTableCellFormat(text);
-            }
-        },
-    ];
+    // DRAWINGS BY PERCENTAGE HERE
+    // console.log(drawingByPortions);
 
     return (
         <div>
@@ -129,15 +80,12 @@ const ChartPieDrawing = props => {
                     dataKey='value'
                     outerRadius={100}
                     onClick={drawingStatusTableOnOpen}
-                    // onMouseEnter={(e, activeIndex) => console.log(e)}
-                    // onMouseLeave={() => setActiveIndex(-1)}
                     cursor='pointer'
                 >
                     {dataStatusCount.map((entry, index) => (
                         <Cell
                             key={`cell-${index}`}
                             fill={COLORS[index % COLORS.length]}
-                            // fillOpacity={activeIndex === index ? 0.75 : 1}
                         />
                     ))}
                 </Pie>
@@ -158,16 +106,11 @@ const ChartPieDrawing = props => {
                 visible={modalShown}
                 onOk={drawingStatusTableOnClose}
                 onCancel={drawingStatusTableOnClose}
-                width='85%'
             >
                 <p>{portionClick.name}</p>
                 <p>{drawingByPortions.length}</p>
                 <h2>{Math.round(portionClick.percent * 100) + '%'}</h2>
-                <StyledTable
-                    columns={columns}
-                    dataSource={drawingByPortions}
-                    pagination={{ total: drawingByPortions.length, pageSize: 7 }}
-                />
+                {/* SORTED TABLE SHOWN HERE */}
             </Modal>
         </div>
     );
@@ -184,18 +127,7 @@ const StyledBadge = styled(Badge)`
     }
 `;
 
-const StyledTable = styled(Table)`
-    .ant-table-cell div {
-        /* height: 30px; */
-        padding: 0;
-        margin: 0;
-    }
-    .ant-table-cell {
-        /* height: 30px; */
-        padding: 0;
-        margin: 0;
-    }
-`;
+
 
 
 

@@ -1,12 +1,11 @@
-import { Button } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
 const ButtonCapsule = props => {
-    const { btnname, background } = props;
+    const { btnname, color } = props;
 
     return (
-        <Container {...props} background={background} >
+        <Container {...props} color={color} >
             {btnname}
         </Container >
     );
@@ -14,24 +13,23 @@ const ButtonCapsule = props => {
 
 export default ButtonCapsule;
 
-const Container = styled(Button)`
+// const Container = styled(Button)`
+const Container = styled.div`
     &:hover {
-        outline: none;
+        cursor: pointer;
+        background: #bdc3c7;
     }
-    /* &:focus {
-        outline: none;
-    } */
-    
-    span {
-        font-size: 12px
-    }
+    transition: 0.3s;
+    line-height: 13px;
+    font-size: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 3px;
     padding: 5px;
-    
+    border: 1px solid;
     border-radius: 500px;
-    background: ${props => props.background};
+    border-color: ${props => props.color};
+    background: ${props => props.color};
     
 `;

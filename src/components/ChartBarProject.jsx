@@ -1,7 +1,7 @@
 import { Col, Skeleton } from 'antd';
 import _ from 'lodash';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, LabelList, Tooltip, XAxis, YAxis } from 'recharts';
 import { colorScheme, dataScheme, sizeScheme } from '../assets/constant';
 import ButtonCapsule from './ui/ButtonCapsule';
 import CardPanel from './ui/CardPanel';
@@ -34,16 +34,17 @@ const ChartBarProject = props => {
     };
 
 
-    const getBtnText = (event, att) => event.target.attributes.getNamedItem(att).nodeValue;
+    const labelListType = btnActive !== null && btnActive.includes('productivity') ? 'productivity'
+        : btnActive !== null && btnActive.includes('approval') ? 'delayApproval'
+            : btnActive !== null && btnActive.includes('construction') ? 'delayConstruction' : 'year';
 
-    console.log(btnActive);
 
     return (
         <Col style={{ padding: '0 15px' }} xs={{ span: 24 }} lg={{ span: 8 }}>
             <CardPanel title={title} headColor={chartScheme.chartColor}>
 
                 {loading
-                    ? <div style={{ padding: '20px', marginBottom: '95px' }}><Skeleton /><Skeleton /></div>
+                    ? <div style={{ padding: '20px', marginBottom: '82px' }}><Skeleton /><Skeleton /></div>
                     : (
                         <Fragment>
                             <div style={{ padding: '10px 0 0 10px' }}>
@@ -52,17 +53,17 @@ const ChartBarProject = props => {
                                         btnname='Ascending year'
                                         onClick={event => {
                                             setData(_.sortBy(data, dt => dt.year));
-                                            setBtnActive(getBtnText(event, 'btnname'));
+                                            setBtnActive(event.target.textContent);
                                         }}
-                                        background={btnActive === 'Ascending year' ? chartScheme.chartColor : 'white'}
+                                        color={btnActive === 'Ascending year' ? chartScheme.chartColor : colorScheme.grey0}
                                     />
                                     <ButtonCapsule
                                         btnname='Descending year'
                                         onClick={event => {
                                             setData(_.sortBy(data, e => -e.year));
-                                            setBtnActive(getBtnText(event, 'btnname'));
+                                            setBtnActive(event.target.textContent);
                                         }}
-                                        background={btnActive === 'Descending year' ? chartScheme.chartColor : 'white'}
+                                        color={btnActive === 'Descending year' ? chartScheme.chartColor : colorScheme.grey0}
                                     />
                                 </div>
                                 <div style={{ display: 'flex' }}>
@@ -70,17 +71,17 @@ const ChartBarProject = props => {
                                         btnname={'Ascending ' + chartScheme.chartType}
                                         onClick={event => {
                                             setData(_.sortBy(data, e => e[chartScheme.chartData]));
-                                            setBtnActive(getBtnText(event, 'btnname'));
+                                            setBtnActive(event.target.textContent);
                                         }}
-                                        background={btnActive === 'Ascending ' + chartScheme.chartType ? chartScheme.chartColor : 'white'}
+                                        color={btnActive === 'Ascending ' + chartScheme.chartType ? chartScheme.chartColor : colorScheme.grey0}
                                     />
                                     <ButtonCapsule
                                         btnname={'Descending ' + chartScheme.chartType}
                                         onClick={event => {
                                             setData(_.sortBy(data, e => -e[chartScheme.chartData]));
-                                            setBtnActive(getBtnText(event, 'btnname'));
+                                            setBtnActive(event.target.textContent);
                                         }}
-                                        background={btnActive === 'Descending ' + chartScheme.chartType ? chartScheme.chartColor : 'white'}
+                                        color={btnActive === 'Descending ' + chartScheme.chartType ? chartScheme.chartColor : colorScheme.grey0}
                                     />
                                 </div>
                             </div>
@@ -101,7 +102,9 @@ const ChartBarProject = props => {
                                     dataKey={chartScheme.chartData}
                                     fill={chartScheme.chartColor}
                                     background={{ fill: '#eee' }}
-                                />
+                                >
+                                    <LabelList dataKey={labelListType} position='insideTop' />
+                                </Bar>
                             </BarChart>
 
                         </Fragment>
@@ -112,10 +115,3 @@ const ChartBarProject = props => {
 };
 
 export default ChartBarProject;
-
-// const StyledBarChart = styled(BarChart)`
-//     .recharts-cartesian-axis-tick-value {
-//         transform: rotate(0);
-//     }
-// `;
-

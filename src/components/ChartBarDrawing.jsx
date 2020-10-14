@@ -1,19 +1,13 @@
 import React from 'react';
 import { Bar, BarChart, CartesianGrid, LabelList, Tooltip, XAxis, YAxis } from 'recharts';
-import { colorScheme, sizeScheme } from '../assets/constant';
+import { colorScheme, dataScheme, sizeScheme } from '../assets/constant';
 
 
 
 
 const ChartBarDrawing = props => {
 
-    const data = [
-        { name: 'Rev 0', nos: 350 },
-        { name: 'Rev A', nos: 211 },
-        { name: 'Rev B', nos: 256 },
-        { name: 'Rev C', nos: 58 },
-        { name: 'Rev D', nos: 42 }
-    ];
+ 
 
     const { deviceWidth } = props;
     const chartWidth = deviceWidth < sizeScheme.lg ? deviceWidth - 40 : 300;
@@ -23,7 +17,7 @@ const ChartBarDrawing = props => {
             <BarChart
                 width={chartWidth}
                 height={350}
-                data={data}
+                data={dataScheme.revisionCounts}
                 margin={{ top: 35, right: 30, left: 0, bottom: 20 }}
                 padding={{ top: 10 }}
                 barSize={20}
@@ -35,7 +29,7 @@ const ChartBarDrawing = props => {
                 <Bar
                     dataKey='nos'
                     fill={colorScheme.grey2}
-                    background={{ fill: colorScheme.grey }}
+                    background={{ fill: colorScheme.grey0 }}
                 >
                     <LabelList dataKey='nos' position='insideTop' />
                 </Bar>
