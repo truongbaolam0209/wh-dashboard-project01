@@ -1,35 +1,90 @@
-import { Progress } from 'antd';
-import React, { Fragment } from 'react';
-import { colorScheme } from '../assets/constant';
-import { countAllSameData } from '../utils/function';
+import { Modal, Progress } from 'antd';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { colorType } from '../assets/constant';
+import { getDrawingLateNow } from '../utils/function';
 
 
-const ChartProgress = ({ project }) => {
+const ChartProgress = ({ data, projectName, openDrawingTable }) => {
 
-    const countAllDrawingsUnique = countAllSameData(project, 'Drawing Number');
-    
-    const overdueDummy = [
-        { name: `Late for construction 1/${countAllDrawingsUnique.length}`, value: 5 },
-        { name: `Overdue date of submissions 49/${countAllDrawingsUnique.length}`, value: 90 },
-        { name: `Overdue date of approval 35/${countAllDrawingsUnique.length}`, value: 76 }
+    const { allDrawingsLatestRevision, columnsIndexArray } = data;
+
+    const drawingsLateSubmission = getDrawingLateNow(data, 'drgToConsultant');
+    const drawingsLateApproval = getDrawingLateNow(data, 'getApproval');
+
+
+    const lateForConstruction = projectName === 'Handy' ? 6 : projectName === 'Sumang' ? 15 : null;
+
+    const dataInput = [
+        {
+            name: `Late for construction ${lateForConstruction}/${allDrawingsLatestRevision.length}`,
+            value: lateForConstruction
+        },
+        {
+            name: `Overdue date of submission ${drawingsLateSubmission.length}/${allDrawingsLatestRevision.length}`,
+            value: drawingsLateSubmission.length
+        },
+        {
+            name: `Overdue date of approval ${drawingsLateApproval.length}/${allDrawingsLatestRevision.length}`,
+            value: drawingsLateApproval.length
+        }
     ];
 
-    return (
-        <div style={{ width: '80%', margin: '25px auto' }}>
-            {overdueDummy.map(item => (
-                <Fragment key={item.name}>
-                    <div>{item.name}</div>
-                    <Progress
-                        trailColor='#eee'
-                        strokeColor={colorScheme.grey2}
-                        percent={item.value}
-                        style={{ paddingBottom: 29 }}
-                    />
-                </Fragment>
-            ))}
+    const progressBarClick = (name) => {
+        if (name.includes('construction')) {
+            openDrawingTable('Late for construction', []);
+        } else if (name.includes('submission')) {
+            openDrawingTable(projectName, 'Overdue date of submission', drawingsLateSubmission);
+        } else {
+            openDrawingTable(projectName, 'Overdue date of approval', drawingsLateApproval);
+        };
+    };
 
-        </div>
+    const [modalShown, setModalShown] = useState(false);
+    const drawingStatusTableOnClose = () => {
+        setModalShown(false);
+    };
+
+
+
+    return (
+        <>
+            <div style={{ width: '80%', margin: '25px auto' }}>
+
+                {dataInput.map(item => (
+                    <Container key={item.name} onClick={() => progressBarClick(item.name)}>
+                        <span>{item.name}</span>
+                        <Progress
+                            trailColor='#eee'
+                            strokeColor={colorType.grey2}
+                            percent={Math.round(item.value / allDrawingsLatestRevision.length * 100)}
+                            style={{ paddingBottom: 29 }}
+                        />
+                    </Container>
+                ))}
+            </div>
+
+
+            <Modal
+                title={'xxx'}
+                centered
+                visible={modalShown}
+                onOk={drawingStatusTableOnClose}
+                onCancel={drawingStatusTableOnClose}
+            >
+                <h1>{`Total drawing x}`}</h1>
+                <h2>{`Overdue date of approval x`}</h2>
+            </Modal>
+        </>
+
     );
 };
 
 export default ChartProgress;
+
+const Container = styled.div`
+    &:hover {
+        cursor: pointer,
+    }
+`;
+

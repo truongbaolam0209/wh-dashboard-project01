@@ -1,15 +1,16 @@
 
 
 
-export const colorScheme = {
+export const colorType = {
     yellow: '#f9ca24',
     dark: '#1e272e',
     grey0: '#ecf0f1',
-    grey: '#bdc3c7',
+    grey1: '#bdc3c7',
     grey2: '#636e72',
-    red: '#ff3f34',
+    red: '#b33939',
     green: '#05c46b',
-    blue: '#0984e3'
+    blue: '#0984e3',
+    orange: '#cc8e35',
 };
 
 export const pieChartColors = [
@@ -17,11 +18,17 @@ export const pieChartColors = [
     '#05c46b',
     '#ff3f34',
     '#0984e3',
-    '#636e72'
+    '#636e72',
+    '#cc8e35',
+    '#bdc3c7',
+    '#ff9ff3',
+    '#48dbfb',
+    '#5f27cd'
 ];
 
-export const sizeScheme = {
+export const sizeType = {
     xs: 576,
+    md: 768,
     lg: 992,
     xl: 1200
 };
@@ -53,3 +60,8 @@ export const dataScheme = {
         { name: 'Rev D', nos: 42 }
     ]
 };
+
+
+
+
+

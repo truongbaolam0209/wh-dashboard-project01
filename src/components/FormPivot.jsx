@@ -1,34 +1,17 @@
 import { Button, Modal, Select } from 'antd';
-import _ from 'lodash';
 import React, { useState } from 'react';
-import { colorScheme } from '../assets/constant';
+import { colorType } from '../assets/constant';
 import ButtonCapsule from './ui/ButtonCapsule';
 
 
 
-const FormPivot = props => {
+const FormPivot = ({ projectName, data }) => {
 
-    const { project } = props;
-
-
-    const columnsInDateFormat = [
-        'Model Start(T)',
-        'Model Start(A)',
-        'Model Finish (T)',
-        'Model Finish (A)',
-        'Drawing Start (T)',
-        'Drawing Finish (T)',
-        'Drawing Start (A)',
-        'Drawing Finish (A)',
-        'Drg to Consultant (T)',
-        'Drg to Consultant (A)',
-        'get Approval (T)',
-        'get Approval (A)',
-    ];
+    const { columnsIndexArray } = data;
 
 
     const [pivotArray, setPivotArray] = useState([]);
-    const [titleLeft, setTitleLeft] = useState(_.map(project.columns, 'title'));
+    const [titleLeft, setTitleLeft] = useState(Object.keys(columnsIndexArray));
     const [value, setValue] = useState('Select an option...');
     const [selected, setSelected] = useState(null);
     const [modalFormatVisible, setModalFormatVisible] = useState(false);
@@ -37,7 +20,6 @@ const FormPivot = props => {
 
     const onChange = value => {
         setValue('Select an option...');
-
         setSelected(value);
         if (columnsInDateFormat.includes(value)) {
             setModalFormatVisible(true);
@@ -46,7 +28,6 @@ const FormPivot = props => {
             setPivotArray([...pivotArray, value]);
         };
     };
-
 
     const selectFormat = (e) => {
         const formatType = e.target.textContent;
@@ -59,10 +40,9 @@ const FormPivot = props => {
         setModalFormatVisible(false);
     };
 
-
     const onResetHandle = () => {
         setPivotArray([]);
-        setTitleLeft(_.map(project.columns, 'title'));
+        setTitleLeft(Object.keys(columnsIndexArray));
     };
 
     const onCloseModalDetail = () => {
@@ -74,9 +54,7 @@ const FormPivot = props => {
     return (
         <div style={{ marginTop: '10px', padding: '20px' }}>
             {pivotArray.map(cl => (
-                <div key={cl}>
-                    <Button disabled={true} style={{ width: '100%', margin: '10px auto', display: 'table' }}>{cl}</Button>
-                </div>
+                <Button key={cl} disabled={true} style={{ width: '100%', margin: '10px auto', display: 'table' }}>{cl}</Button>
             ))}
 
             <Select
@@ -94,19 +72,14 @@ const FormPivot = props => {
             </Select>
             <div style={{ display: 'flex' }}>
                 <Button
-                    style={{ background: colorScheme.grey0, width: '90%', margin: '10px auto' }}
+                    style={{ background: colorType.grey0, width: '90%', margin: '10px auto' }}
                     onClick={() => setModalDetailTableVisible(true)}
-                >
-                    Go to sorted table
-                </Button>
+                >Go to sorted table</Button>
                 <Button
-                    style={{ background: colorScheme.grey2, width: '90%', margin: '10px auto' }}
+                    style={{ background: colorType.grey2, width: '90%', margin: '10px auto' }}
                     onClick={onResetHandle}
-                >
-                    Reset
-                    </Button>
+                >Reset</Button>
             </div>
-
 
 
             <Modal
@@ -136,3 +109,19 @@ const FormPivot = props => {
 };
 
 export default FormPivot;
+
+
+const columnsInDateFormat = [
+    'Model Start(T)',
+    'Model Start(A)',
+    'Model Finish (T)',
+    'Model Finish (A)',
+    'Drawing Start (T)',
+    'Drawing Finish (T)',
+    'Drawing Start (A)',
+    'Drawing Finish (A)',
+    'Drg to Consultant (T)',
+    'Drg to Consultant (A)',
+    'get Approval (T)',
+    'get Approval (A)'
+];

@@ -1,39 +1,61 @@
-import React from 'react';
-import { Bar, BarChart, CartesianGrid, LabelList, Tooltip, XAxis, YAxis } from 'recharts';
-import { colorScheme, sizeScheme } from '../assets/constant';
-import { countAllSameData } from '../utils/function';
+import _ from 'lodash';
+import React, { useState } from 'react';
+import { Bar, BarChart, CartesianGrid, Cell, Tooltip, XAxis, YAxis } from 'recharts';
+import { colorType } from '../assets/constant';
+import { getAllDrawingSameValueInOneColumn } from '../utils/function';
 
 
-const ChartBarDrawing = props => {
+
+const ChartBarDrawing = ({ data, openDrawingTable, projectName }) => {
 
 
-    const { deviceWidth, project } = props;
-    const chartWidth = deviceWidth < sizeScheme.lg ? deviceWidth - 40 : 300;
+    const { drawingCount, drawingList } = getAllDrawingSameValueInOneColumn(data, 'Rev');
+    const dataChart = _.map(drawingCount, (value, name) => ({ name, value }));
 
 
-    const countAllRev = countAllSameData(project, 'Rev').filter(rev => rev.name !== 'undefined' && rev.name !== '-');
+    const onClick = (e) => {
+        openDrawingTable(projectName, 'Revision ' + e.name, drawingList[e.name]);
+    };
+
+    const [activeIndex, setActiveIndex] = useState(null);
+
+    const onMouseEnter = (data, index) => {
+        setActiveIndex(index);
+    };
+    const onMouseLeave = (data, index) => {
+        setActiveIndex(null);
+    };
 
 
     return (
         <div style={{ margin: '0 auto', display: 'table' }}>
             <BarChart
-                width={chartWidth}
+                width={320}
                 height={350}
-                data={countAllRev}
+                data={dataChart}
                 margin={{ top: 35, right: 30, left: 0, bottom: 20 }}
                 padding={{ top: 10 }}
                 barSize={20}
             >
-                <XAxis dataKey='name' textAnchor='end' angle={-45} interval={0} scale='point' padding={{ left: 15, right: 10 }} />
+                <XAxis dataKey='name' textAnchor='end' angle={-45} interval={0} scale='point' padding={{ left: 30, right: 30 }} />
                 <YAxis />
                 <Tooltip />
                 <CartesianGrid strokeDasharray='3 3' />
                 <Bar
                     dataKey='value'
-                    fill={colorScheme.grey2}
-                    background={{ fill: colorScheme.grey0 }}
+                    background={{ fill: colorType.grey0 }}
+                    onClick={onClick}
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                    barSize={25}
                 >
-                    <LabelList dataKey='value' position='top' />
+                    {dataChart.map((entry, index) => (
+                        <Cell
+                            cursor='pointer'
+                            fill={index === activeIndex ? colorType.grey1 : colorType.grey2}
+                            key={`cell-${index}`}
+                        />
+                    ))}
                 </Bar>
 
             </BarChart>

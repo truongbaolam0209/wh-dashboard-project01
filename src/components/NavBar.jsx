@@ -1,7 +1,7 @@
 import { DownCircleOutlined, MessageOutlined } from '@ant-design/icons';
 import { Avatar, BackTop, Divider, Icon, Layout, Row } from 'antd';
 import React from 'react';
-import { colorScheme, sizeScheme } from '../assets/constant';
+import { colorType, sizeType } from '../assets/constant';
 
 
 const NavBar = props => {
@@ -10,13 +10,13 @@ const NavBar = props => {
 
 
     return (
-        <Layout>
-            <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0 10px', height: 55 }}>
+        <Layout >
+            <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0 10px', height: 55, background: '#576574' }}>
                 <div style={{ paddingTop: 5 }}>
+   
 
-
-                    <Row style={{ float: 'left', }}>
-                        <img style={{ transform: 'translateY(-10px) translateX(-5px)' }} width={150} src='./img/logo3.png' />
+                    <Row style={{ float: 'left' }}>
+                        <img alt='logo' style={{ transform: 'translateY(-10px) translateX(-5px)' }} width={150} src='./img/logo3.png' />
                     </Row>
 
 
@@ -27,7 +27,7 @@ const NavBar = props => {
                                 <div style={{ lineHeight: '20px', fontSize: 13, textAlign: 'right' }}>Project Director</div>
                             </div>
                             <Avatar size={40} icon='user' />
-                            {window.innerWidth <= sizeScheme.xs ? '' : (
+                            {window.innerWidth <= sizeType.xs ? '' : (
                                 <>
                                     <Divider type='vertical' style={{ backgroundColor: '#f9ca24', height: 40, width: 1, margin: '0 15px' }} />
                                     <MessageOutlined style={{ color: '#f9ca24', fontSize: 40, marginRight: 10 }} />
@@ -52,7 +52,7 @@ const NavBar = props => {
                     width: 40,
                     lineHeight: '40px',
                     borderRadius: 4,
-                    backgroundColor: colorScheme.yellow,
+                    backgroundColor: colorType.yellow,
                     color: 'white',
                     textAlign: 'center',
                     fontSize: 20,
