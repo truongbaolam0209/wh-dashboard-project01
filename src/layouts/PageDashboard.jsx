@@ -1,4 +1,5 @@
 import { Col, Divider, Modal, Row, Skeleton } from 'antd';
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { colorType } from '../assets/constant';
 import ChartBarDrawing from '../components/ChartBarDrawing';
