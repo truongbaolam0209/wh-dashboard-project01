@@ -2,19 +2,24 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, Tooltip, XAxis, YAxis } from 'recharts';
 import { colorType } from '../assets/constant';
-import { getAllDrawingSameValueInOneColumn } from '../utils/function';
+import { getAllDrawingSameValueInOneColumn, mergeUndefined } from '../utils/function';
 
 
 
 const ChartBarDrawing = ({ data, openDrawingTable, projectName }) => {
 
 
-    const { drawingCount, drawingList } = getAllDrawingSameValueInOneColumn(data, 'Rev');
+    const { drawingCount, drawingList } = mergeUndefined(getAllDrawingSameValueInOneColumn(data, 'Rev'), '0');
     const dataChart = _.map(drawingCount, (value, name) => ({ name, value }));
 
 
     const onClick = (e) => {
-        openDrawingTable(projectName, 'Revision ' + e.name, drawingList[e.name]);
+        openDrawingTable(
+            projectName,
+            { type: 'Drawings by revision', category: `Revision ${e.name}` },
+            drawingList[e.name],
+            data.columnsIndexArray
+        );
     };
 
     const [activeIndex, setActiveIndex] = useState(null);

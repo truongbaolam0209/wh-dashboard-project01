@@ -128,7 +128,43 @@ export const mergeUndefined = ({ drawingCount, drawingList }, mergeWith) => {
 
 
 
+export const pickDataToTable = (drawings, columnsIndexArray) => {
 
+    let dwgArray = [];
+    drawings.forEach(dwg => {
+        const drawingNumber = dwg[columnsIndexArray['Drawing Number']].value || 'N/A';
+        const drawingName = dwg[columnsIndexArray['Drawing Name']].value || 'N/A';
+        const rfaRef = dwg[columnsIndexArray['RFA Ref']].value || 'N/A';
+        const drgType = dwg[columnsIndexArray['Drg Type']].value || 'N/A';
+        const useFor = dwg[columnsIndexArray['Use For']].value || 'N/A';
+        const coordinatorInCharge = dwg[columnsIndexArray['Coordinator In Charge']].value || 'N/A';
+        const modeller = dwg[columnsIndexArray['Modeller']].value || 'N/A';
+        const drgToConsultantT = dwg[columnsIndexArray['Drg to Consultant (T)']].value || 'N/A';
+        const drgToConsultantA = dwg[columnsIndexArray['Drg to Consultant (A)']].value || 'N/A';
+        const getApprovalT = dwg[columnsIndexArray['get Approval (T)']].value || 'N/A';
+        const getApprovalA = dwg[columnsIndexArray['get Approval (A)']].value || 'N/A';
+        const rev = dwg[columnsIndexArray['Rev']].value || 'N/A';
+        const status = dwg[columnsIndexArray['Status']].value || 'N/A';
+
+        dwgArray.push({
+            drawingNumber,
+            drawingName,
+            rfaRef,
+            drgType,
+            useFor,
+            coordinatorInCharge,
+            modeller,
+            drgToConsultantT,
+            drgToConsultantA,
+            getApprovalT,
+            getApprovalA,
+            rev,
+            status
+        });
+    });
+
+    return dwgArray;
+};
 
 
 

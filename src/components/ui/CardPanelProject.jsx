@@ -1,7 +1,10 @@
 import { Card, Row } from 'antd';
 import React from 'react';
+import { colorType } from '../../assets/constant';
 
-const CardPanelProject = ({ children, title, headColor }) => {
+
+
+const CardPanelProject = ({ children, title }) => {
 
 
     return (
@@ -19,7 +22,7 @@ const CardPanelProject = ({ children, title, headColor }) => {
                 padding: 0,
             }}
             headStyle={{
-                backgroundColor: headColor,
+                backgroundColor: colorType.grey2,
                 color: 'white',
                 lineHeight: '15px'
             }}

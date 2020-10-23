@@ -1,9 +1,9 @@
-import { Badge, Tooltip } from 'antd';
+import { Badge } from 'antd';
 import _ from 'lodash';
 import React from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
 import styled from 'styled-components';
-import { pieChartColors } from '../assets/constant';
+import { pieChartColors2 } from '../assets/constant';
 import { getAllDrawingSameValueInOneColumn, mergeUndefined } from '../utils/function';
 
 
@@ -13,13 +13,13 @@ const ChartPieDrawing = ({ data, openDrawingTable, projectName }) => {
 
     const { drawingCount, drawingList } = mergeUndefined(getAllDrawingSameValueInOneColumn(data, 'Status'), 'Not Started');
     const dataChart = _.map(drawingCount, (value, name) => ({ name, value }));
-
-
+    console.log(dataChart);
     const onClick = (portion) => {
         openDrawingTable(
             projectName,
-            'Drawing Status' + portion.name,
-            drawingList[portion.name]
+            { type: 'Drawing Status', category: portion.name },
+            drawingList[portion.name],
+            data.columnsIndexArray
         );
     };
 
@@ -44,50 +44,36 @@ const ChartPieDrawing = ({ data, openDrawingTable, projectName }) => {
                     dataKey='value'
                     outerRadius={100}
                     onClick={onClick}
-                    // onMouseEnter={onMouseEnter}
-                    // onMouseLeave={onMouseLeave}
+                // onMouseEnter={onMouseEnter}
+                // onMouseLeave={onMouseLeave}
                 >
-                    {dataChart.map((entry, index) => (
+                    {Object.keys(drawingCount).map(item => (
                         <Cell
                             cursor='pointer'
-                            key={`cell-${index}`}
-                            fill={pieChartColors[index % pieChartColors.length]}
+                            key={`cell-${item}`}
+                            fill={pieChartColors2[item]}
                         />
                     ))}
                 </Pie>
-                <Tooltip />
             </PieChart>
 
             <div style={{ margin: '0 auto', display: 'table' }}>
-                {dataChart.map(item => (
-                    <div key={item.name}>
+                {Object.keys(drawingCount).map(item => (
+                    <div key={item}>
                         <StyledBadge
                             size='small'
-                            color={pieChartColors[dataChart.indexOf(item)]}
-                            text={item.name}
+                            color={pieChartColors2[item]}
+                            text={item}
                         />
                     </div>
                 ))}
             </div>
-
-            {/* <Modal
-                title={'Drawings by ' + statusClicked.name}
-                centered
-                visible={modalShown}
-                onOk={drawingStatusTableOnClose}
-                onCancel={drawingStatusTableOnClose}
-                width='90%'
-                height='90%'
-            >
-                <p>{statusClicked.name}</p>
-                <h2>{Math.round(statusClicked.percent * 100) + '%'}</h2>
-                <TableDrawingList data={pickDataToTalbe(drawingByPortions, columnsIndexArray)} />
-            </Modal> */}
         </>
     );
 };
 
 export default ChartPieDrawing;
+
 
 
 const StyledBadge = styled(Badge)`
@@ -97,38 +83,6 @@ const StyledBadge = styled(Badge)`
         border-radius: 0;
     }
 `;
-
-
-
-
-const pickDataToTalbe = (drawings, columnsIndexArray) => {
-
-    let dwgArray = [];
-    drawings.forEach(dwg => {
-        const drawingNumber = dwg[columnsIndexArray['Drawing Number']].value || 'N/A';
-        const drawingName = dwg[columnsIndexArray['Drawing Name']].value || 'N/A';
-        const drgType = dwg[columnsIndexArray['Drg Type']].value || 'N/A';
-        const useFor = dwg[columnsIndexArray['Use For']].value || 'N/A';
-        const coordinatorInCharge = dwg[columnsIndexArray['Coordinator In Charge']].value || 'N/A';
-        const modeller = dwg[columnsIndexArray['Modeller']].value || 'N/A';
-        const rev = dwg[columnsIndexArray['Rev']].value || 'N/A';
-        const status = dwg[columnsIndexArray['Status']].value || 'N/A';
-
-        dwgArray.push({
-            drawingNumber,
-            drawingName,
-            drgType,
-            useFor,
-            coordinatorInCharge,
-            modeller,
-            rev,
-            status
-        });
-    });
-
-    return dwgArray;
-};
-
 
 
 const renderCustomizedLabel = (args) => {

@@ -1,11 +1,9 @@
-import { Col, Row, Skeleton } from 'antd';
+import { Col, Divider, Modal, Row, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { colorType } from '../assets/constant';
 import ChartBarDrawing from '../components/ChartBarDrawing';
-import ChartBarDrawingStatus from '../components/ChartBarDrawingStatus';
-import ChartBarLateApproval from '../components/ChartBarLateApproval';
-import ChartBarLateConstruction from '../components/ChartBarLateConstruction';
-import ChartBarProductivity from '../components/ChartBarProductivity';
+import ChartBarDrawingLate from '../components/ChartBarDrawingLate';
+import ChartBarStack from '../components/ChartBarStack';
 import ChartPieDrawing from '../components/ChartPieDrawing';
 import ChartProgress from '../components/ChartProgress';
 import FormPivot from '../components/FormPivot';
@@ -19,7 +17,6 @@ import { getDataConverted } from '../utils/function';
 
 const PageDashboard = () => {
 
-    const deviceWidth = window.innerWidth;
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -53,35 +50,23 @@ const PageDashboard = () => {
         loadData();
     }, []);
 
-    // console.log(data);
 
-
-    const openDrawingTable = (projectName, title, drawings) => {
-        console.log(projectName, title, drawings);
+    const [drawingTableVisible, setDrawingTableVisible] = useState(false);
+    const [drawingTableData, setDrawingTableData] = useState(null);
+    const openDrawingTable = (projectName, title, drawings, columnsIndexArray) => {
+        setDrawingTableData({ projectName, title, drawings, columnsIndexArray });
+        setDrawingTableVisible(true);
     };
+
 
     return (
         <NavBar>
             <div style={{ marginTop: '60px' }}>
                 <Row justify='space-around' style={{ margin: '25px 0 5px 0' }}>
-                    <ChartBarLateConstruction
-                        title='No Of Drawing Late Construction'
-                        color={colorType.red}
-                    />
-                    <ChartBarLateApproval
-                        title='No Of Drawing Late Approval'
-                        color={colorType.red}
-                        data={data}
-                    />
-                    <ChartBarDrawingStatus
-                        title='Drawing Status'
-                        color={colorType.orange}
-                        data={data}
-                    />
-                    <ChartBarProductivity
-                        title='Productivity'
-                        color={colorType.orange}
-                    />
+                    <ChartBarDrawingLate title='No Of Drawing Late Construction' />
+                    <ChartBarDrawingLate data={data} title='No Of Drawing Late Approval' />
+                    <ChartBarStack data={data} title='Drawing Status' />
+                    <ChartBarStack title='Productivity - (days per drawing)' />
                 </Row>
 
                 {!loading && data ? (
@@ -91,12 +76,8 @@ const PageDashboard = () => {
                                 <CardPanelProject
                                     title={projectName.toUpperCase()}
                                     key={projectName}
-                                    headColor={colorType.grey2}
-                                    headTitleColor='white'
                                 >
-
-
-                                    <ChartPanel titleInfo='Overdue submissions'>
+                                    <ChartPanel title='Overdue submissions'>
                                         <ChartProgress
                                             data={data[projectName]}
                                             openDrawingTable={openDrawingTable}
@@ -106,7 +87,7 @@ const PageDashboard = () => {
 
                                     {/* {deviceWidth && deviceWidth >= sizeType.md && <Divider type='horizontal' style={{ padding: '3px 0' }} />} */}
 
-                                    <ChartPanel titleInfo='Drawing Status'>
+                                    <ChartPanel title='Drawing Status'>
                                         <ChartPieDrawing
                                             data={data[projectName]}
                                             openDrawingTable={openDrawingTable}
@@ -116,7 +97,7 @@ const PageDashboard = () => {
 
                                     {/* {deviceWidth && deviceWidth >= sizeType.xl && <Divider type='horizontal' style={{ padding: '3px 0' }} />} */}
 
-                                    <ChartPanel titleInfo='Drawing counts by revision'>
+                                    <ChartPanel title='Drawing counts by revision'>
                                         <ChartBarDrawing
                                             data={data[projectName]}
                                             openDrawingTable={openDrawingTable}
@@ -126,7 +107,7 @@ const PageDashboard = () => {
 
                                     {/* {deviceWidth && deviceWidth >= sizeType.md && <Divider type='horizontal' style={{ padding: '3px 0' }} />} */}
 
-                                    <ChartPanel titleInfo='Sorted table by category'>
+                                    <ChartPanel title='Sorted table by category'>
                                         <FormPivot
                                             data={data[projectName]}
                                             openDrawingTable={openDrawingTable}
@@ -140,7 +121,37 @@ const PageDashboard = () => {
                     </div>
                 ) : <SkeletonCard />}
 
-                <TableDrawingList />
+
+                {drawingTableData && (
+                    <Modal
+                        title={drawingTableData.projectName}
+                        visible={drawingTableVisible}
+                        onOk={() => setDrawingTableVisible(false)}
+                        onCancel={() => setDrawingTableVisible(false)}
+                        width={0.9 * window.innerWidth}
+                        height={0.7 * window.innerHeight}
+                        // centered={true}
+                        style={{
+                            // justifyContent: 'center',
+                            // alignItems: 'center'
+                        }}
+                    >
+                        <h2>{drawingTableData.title.type}</h2>
+                        <div style={{ display: 'flex' }}>
+                            <h3>{drawingTableData.title.category}</h3>
+                            <Divider type='vertical' />
+                            <h3>{drawingTableData.drawings.length + ' drawings'}</h3>
+                        </div>
+
+                        <TableDrawingList
+                            data={drawingTableData}
+                        />
+                    </Modal>
+                )}
+
+
+
+
             </div>
         </NavBar>
     );
@@ -152,10 +163,10 @@ export default PageDashboard;
 
 
 
-const ChartPanel = ({ titleInfo, children }) => {
+const ChartPanel = ({ title, children }) => {
     return (
         <Col style={{ marginBottom: 10 }} xs={24} md={12} xl={6}>
-            <div style={{ fontSize: '18px', textAlign: 'center', fontWeight: 'bold' }}>{titleInfo}</div>
+            <div style={{ fontSize: '18px', textAlign: 'center', fontWeight: 'bold' }}>{title}</div>
             {children}
         </Col>
     );

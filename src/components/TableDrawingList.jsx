@@ -1,6 +1,8 @@
+import { Icon } from 'antd';
 import React, { useMemo } from 'react';
 import { useExpanded, useGroupBy, useTable } from 'react-table';
 import styled from 'styled-components';
+import { pickDataToTable } from '../utils/function';
 
 
 
@@ -18,36 +20,33 @@ const Table = ({ columns, data }) => {
             data
         },
         useGroupBy,
-        useExpanded
+        useExpanded,
+        // useBlockLayout
     );
 
-    const firstPageRows = rows.slice(0, 100);
 
     return (
         <>
-            <pre>
-                <code>{JSON.stringify({ groupBy, expanded }, null, 2)}</code>
-            </pre>
-            <Legend />
             <table {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps()}>
+                            {headerGroup.headers.map(column =>
+                                <th {...column.getHeaderProps()} >
                                     {column.canGroupBy ? (
                                         <span {...column.getGroupByToggleProps()}>
-                                            {column.isGrouped ? '🛑 ' : '👊 '}
+                                            {column.isGrouped ? <IconTable type='stop' /> : <IconTable type='plus-circle' />}
                                         </span>
                                     ) : null}
                                     {column.render('Header')}
                                 </th>
-                            ))}
+                            )}
                         </tr>
                     ))}
                 </thead>
-                <tbody {...getTableBodyProps()}>
-                    {firstPageRows.map((row, i) => {
+
+                <tbody {...getTableBodyProps()} style={{ height: 500, overflowY: 'scroll' }}>
+                    {rows.map((row, i) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()}>
@@ -67,7 +66,7 @@ const Table = ({ columns, data }) => {
                                             {cell.isGrouped ? (
                                                 <>
                                                     <span {...row.getExpandedToggleProps()}>
-                                                        {row.isExpanded ? '👇' : '👉'}
+                                                        {row.isExpanded ? <IconTable type='up-circle' /> : <IconTable type='down-circle' />}
                                                     </span>{' '}
                                                     {cell.render('Cell')} ({row.subRows.length})
                                                 </>
@@ -82,55 +81,20 @@ const Table = ({ columns, data }) => {
                         )
                     })}
                 </tbody>
+
             </table>
-            <br />
-            <div>Showing the first 100 results of {rows.length} rows</div>
         </>
     );
 };
 
-const Legend = () => {
+const IconTable = ({ type }) => {
+
     return (
-        <div style={{ padding: '0.5rem 0' }}>
-            <span style={{
-                display: 'inline-block',
-                background: '#0aff0082',
-                padding: '0.5rem',
-            }}>
-                Grouped
-            </span>{' '}
-            <span style={{
-                display: 'inline-block',
-                background: '#ffa50078',
-                padding: '0.5rem',
-            }}>
-                Aggregated
-            </span>{' '}
-            <span style={{
-                display: 'inline-block',
-                background: '#ff000042',
-                padding: '0.5rem',
-            }}>
-                Repeated Value
-            </span>
-        </div>
+        <Icon style={{ fontSize: 16, marginRight: 5, color: 'red' }} type={type} />
     );
 };
 
-
-const roundedMedian = (leafValues) => {
-    let min = leafValues[0] || 0;
-    let max = leafValues[0] || 0;
-
-    leafValues.forEach(value => {
-        min = Math.min(min, value)
-        max = Math.max(max, value)
-    });
-
-    return Math.round((min + max) / 2);
-};
-
-const TableDrawingList = ({data}) => {
+const TableDrawingList = ({ data }) => {
 
     const columns = useMemo(() => [
         {
@@ -139,14 +103,10 @@ const TableDrawingList = ({data}) => {
                 {
                     Header: 'Drawing Number',
                     accessor: 'drawingNumber',
-                    // aggregate: 'count',
-                    // Aggregated: ({ value }) => `${value} Names`,
                 },
                 {
                     Header: 'Drawing Name',
                     accessor: 'drawingName',
-                    // aggregate: 'uniqueCount',
-                    // Aggregated: ({ value }) => `${value} Unique Names`,
                 },
             ],
         },
@@ -154,16 +114,16 @@ const TableDrawingList = ({data}) => {
             Header: 'Info',
             columns: [
                 {
+                    Header: 'RFA Ref',
+                    accessor: 'rfaRef',
+                },
+                {
                     Header: 'Drg Type',
                     accessor: 'drgType',
-                    // aggregate: 'average',
-                    // Aggregated: ({ value }) => `${value} Drg Type`,
                 },
                 {
                     Header: 'Use For',
                     accessor: 'useFor',
-                    // aggregate: 'sum',
-                    // Aggregated: ({ value }) => `${value} (total)`,
                 },
                 {
                     Header: 'Coordinator In Charge',
@@ -172,8 +132,22 @@ const TableDrawingList = ({data}) => {
                 {
                     Header: 'Modeller',
                     accessor: 'modeller',
-                    // aggregate: roundedMedian,
-                    // Aggregated: ({ value }) => `${value} (med)`,
+                },
+                {
+                    Header: 'Drg To Consultant (T)',
+                    accessor: 'drgToConsultantT',
+                },
+                {
+                    Header: 'Drg To Consultant (A)',
+                    accessor: 'drgToConsultantA',
+                },
+                {
+                    Header: 'get Approval (T)',
+                    accessor: 'getApprovalT',
+                },
+                {
+                    Header: 'get Approval (A)',
+                    accessor: 'getApprovalA',
                 },
                 {
                     Header: 'Rev',
@@ -187,21 +161,28 @@ const TableDrawingList = ({data}) => {
         },
     ], []);
 
-    // const data = useMemo(() => makeData(200), []);
+    console.log(data);
+    const { projectName, title, drawings, columnsIndexArray } = data;
 
-    
     return (
         <Container>
-            <Table columns={columns} data={data ? data: []} />
+            <Table columns={columns} data={pickDataToTable(drawings, columnsIndexArray)} />
         </Container>
     );
 };
+
+
 
 export default TableDrawingList;
 
 
 const Container = styled.div`
     padding: 1rem;
+    overflow: auto;
+    white-space: nowrap;
+    overflow-y: scroll;
+    height: ${0.6 * window.innerHeight}px;
+    vertical-align: middle;
 
     table {
         border-spacing: 0;
@@ -217,10 +198,12 @@ const Container = styled.div`
 
         th, td {
             margin: 0;
-            padding: 0.5rem;
+            padding: 0.2rem;
             border-bottom: 1px solid black;
             border-right: 1px solid black;
-
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             :last-child {
                 border-right: 0;
             }

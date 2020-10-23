@@ -2,7 +2,7 @@
 
 
 export const colorType = {
-    yellow: '#f9ca24',
+    yellow: '#fff200',
     dark: '#1e272e',
     grey0: '#ecf0f1',
     grey1: '#bdc3c7',
@@ -14,17 +14,36 @@ export const colorType = {
 };
 
 export const pieChartColors = [
-    '#f9ca24',
+    '#fff200',
     '#05c46b',
-    '#ff3f34',
+    '#b33939',
     '#0984e3',
-    '#636e72',
     '#cc8e35',
-    '#bdc3c7',
-    '#ff9ff3',
-    '#48dbfb',
-    '#5f27cd'
+    '#9b59b6',
+    '#2c3e50',
+    '#4cd137',
+    '#d1ccc0'
 ];
+
+export const pieChartColors2 = {
+    'Approved with comments, to Resubmit': '#fff200',
+    'Approved with Comment, no submission Required': '#05c46b',
+    'Approved for Construction': '#b33939',
+    'Consultant reviewing': '#0984e3',
+    'Not Started': '#cc8e35',
+    'Revise In-Progress': '#9b59b6',
+    '1st cut of drawing in-progress': '#2c3e50',
+
+
+
+
+    'Modelling': '#fff200',
+    'Shopdrawing': '#05c46b',
+    'Submit To Consultant': '#b33939',
+    'Consultant Reply': '#0984e3',
+    'Get Approval': '#cc8e35'
+};
+
 
 export const sizeType = {
     xs: 576,
@@ -60,6 +79,12 @@ export const dataScheme = {
         { name: 'Rev D', nos: 42 }
     ]
 };
+
+
+
+export const chartWidth = window.innerWidth >= sizeType.xl ? (window.innerWidth - 160) / 4 :
+    window.innerWidth >= sizeType.md ? (window.innerWidth - 80) / 2 :
+        window.innerWidth - 100;
 
 
 

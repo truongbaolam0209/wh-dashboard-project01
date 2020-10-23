@@ -1,11 +1,10 @@
 import { Card, Col } from 'antd';
 import React from 'react';
-import { BarChart } from 'recharts';
 import { sizeType } from '../../assets/constant';
 
 
 
-const CardPanel = ({ children, title, headColor, data }) => {
+const CardPanel = ({ children, title, headColor }) => {
 
     const width = window.innerWidth >= sizeType.xl ? (window.innerWidth - 160) / 4 :
         window.innerWidth >= sizeType.md ? (window.innerWidth - 80) / 2 :
@@ -33,16 +32,7 @@ const CardPanel = ({ children, title, headColor, data }) => {
                     lineHeight: '15px'
                 }}
             >
-                <BarChart
-                    data={data}
-                    width={width}
-                    height={350}
-                    margin={{ top: 35, right: 20, left: 15, bottom: 80 }}
-                    padding={{ top: 10 }}
-                    barSize={30}
-                >
-                    {children}
-                </BarChart>
+                {children}
             </Card>
         </Col>
     );

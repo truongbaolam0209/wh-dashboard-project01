@@ -1,11 +1,12 @@
-import { Button, Modal, Select } from 'antd';
+import { Button, Divider, Modal, Select } from 'antd';
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { colorType } from '../assets/constant';
 import ButtonCapsule from './ui/ButtonCapsule';
 
 
 
-const FormPivot = ({ projectName, data }) => {
+const FormPivot = ({ projectName, data, openDrawingTable }) => {
 
     const { columnsIndexArray } = data;
 
@@ -15,7 +16,6 @@ const FormPivot = ({ projectName, data }) => {
     const [value, setValue] = useState('Select an option...');
     const [selected, setSelected] = useState(null);
     const [modalFormatVisible, setModalFormatVisible] = useState(false);
-    const [modalDetailTableVisible, setModalDetailTableVisible] = useState(false);
 
 
     const onChange = value => {
@@ -45,16 +45,29 @@ const FormPivot = ({ projectName, data }) => {
         setTitleLeft(Object.keys(columnsIndexArray));
     };
 
-    const onCloseModalDetail = () => {
-        onResetHandle();
-        setModalDetailTableVisible(false);
+
+    const sortedTableOpen = () => {
+        // openDrawingTable(projectName, 'Sorted Table', pivotArray);
     };
 
+
+
+
+    const onRemoveCategory = (e) => {
+        const btnName = e.target.previousSibling.previousSibling.innerText;
+        setPivotArray(pivotArray.filter(x => x !== btnName));
+    };
+
+    console.log(pivotArray);
 
     return (
         <div style={{ marginTop: '10px', padding: '20px' }}>
             {pivotArray.map(cl => (
-                <Button key={cl} disabled={true} style={{ width: '100%', margin: '10px auto', display: 'table' }}>{cl}</Button>
+                <div key={cl} style={{ width: '100%', margin: '10px auto', padding: 5, border: `1px solid ${colorType.grey1}`, borderRadius: 3 }}>
+                    <span style={{ marginRight: 15 }}>{cl}</span>
+                    <Divider type='vertical' />
+                    <SpanOmit style={{ marginRight: 15 }} onClick={onRemoveCategory}>X</SpanOmit>
+                </div>
             ))}
 
             <Select
@@ -73,7 +86,7 @@ const FormPivot = ({ projectName, data }) => {
             <div style={{ display: 'flex' }}>
                 <Button
                     style={{ background: colorType.grey0, width: '90%', margin: '10px auto' }}
-                    onClick={() => setModalDetailTableVisible(true)}
+                    onClick={sortedTableOpen}
                 >Go to sorted table</Button>
                 <Button
                     style={{ background: colorType.grey2, width: '90%', margin: '10px auto' }}
@@ -93,23 +106,22 @@ const FormPivot = ({ projectName, data }) => {
                 <ButtonCapsule btnname='Year' onClick={selectFormat} />
             </Modal>
 
-
-            <Modal
-                title='Sorted table'
-                centered
-                visible={modalDetailTableVisible}
-                onOk={onCloseModalDetail}
-                onCancel={onCloseModalDetail}
-            >
-                {/* SORTED TABLE SHOWN HERE */}
-            </Modal>
-
         </div>
     );
 };
 
 export default FormPivot;
 
+
+
+
+const SpanOmit = styled.span`
+    :hover {
+        color: red;
+        cursor: pointer
+    }
+
+`;
 
 const columnsInDateFormat = [
     'Model Start(T)',

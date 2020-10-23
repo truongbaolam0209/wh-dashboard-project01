@@ -31,13 +31,25 @@ const ChartProgress = ({ data, projectName, openDrawingTable }) => {
     ];
 
     const progressBarClick = (name) => {
+        let dwgs;
+        let category;
         if (name.includes('construction')) {
-            openDrawingTable('Late for construction', []);
+            dwgs = [];
+            category = 'Late for construction';
         } else if (name.includes('submission')) {
-            openDrawingTable(projectName, 'Overdue date of submission', drawingsLateSubmission);
-        } else {
-            openDrawingTable(projectName, 'Overdue date of approval', drawingsLateApproval);
+            dwgs = drawingsLateSubmission;
+            category = 'Overdue date of submission';
+        } else if (name.includes('approval')) {
+            dwgs = drawingsLateApproval;
+            category = 'Overdue date of approval';
         };
+
+        openDrawingTable(
+            projectName,
+            { type: 'Overdue Drawings', category: category },
+            dwgs,
+            columnsIndexArray
+        );
     };
 
     const [modalShown, setModalShown] = useState(false);

@@ -16,7 +16,7 @@ const NavBar = props => {
    
 
                     <Row style={{ float: 'left' }}>
-                        <img alt='logo' style={{ transform: 'translateY(-10px) translateX(-5px)' }} width={150} src='./img/logo3.png' />
+                        {/* <img alt='logo' style={{ transform: 'translateY(-10px) translateX(-5px)' }} width={150} src='./img/logo3.png' /> */}
                     </Row>
 
 
