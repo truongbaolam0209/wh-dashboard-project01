@@ -1,5 +1,4 @@
 {
-  "homepage": "http://truongbaolam0209/wh-dashboard-project01",
   "name": "wh-dashboard-01",
   "version": "0.1.0",
   "private": true,
@@ -28,8 +27,6 @@
     "write-json-file": "^4.3.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

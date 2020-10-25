@@ -51,6 +51,7 @@ const Table = ({ columns, data }) => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map(cell => {
+                                    console.log(row);
                                     return (
                                         <td {...cell.getCellProps()}
                                             style={{
